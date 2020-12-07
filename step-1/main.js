@@ -18,7 +18,7 @@ const getText = () => {
 };
 
 const convertTextToArray = (text) => {
-  return array;
+  return text.split(" ");
 };
 
 const checkIsCorrectInput = (array) => {
