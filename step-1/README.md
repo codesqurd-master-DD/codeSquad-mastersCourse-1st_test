@@ -1,28 +1,29 @@
-# codeSquad-mastersCourse-1st_test
+# codeSquad-mastersCourse-test step-1
 
-## Step-1 단어 밀어내기 구현하기
+## 단어 밀어내기 구현하기
 
 1. 사용자로부터 단어 하나, 정수 숫자 하나 (-100 &lt; N &lt; 100), L 또는 R을 입력 받는다 (대소문자 둘 다 가능)
 2. 주어진 단어를 정수 숫자만큼, L 또는 R 방향으로 밀어낸다
 3. 밀려난 단어는 사라지지 않고 반대쪽으로 채워진다.
 
-### 1단계 코딩 요구사항
+### 예시
+홀추 줄은 입력, 짝수 줄은 출력이다. 
+
+    &gt; apple 3 L 
+    leapp
+
+    &gt; banana 6 R
+    banana
+
+    &gt; carrot -1 r
+    arrotc
+
+    &gt; cat -4 R
+    atc
+
+### 1단계 요구사항
 - 컴파일 및 실행되지 않을 경우 불합격
 - 자신만의 기준으로 최대한 간결하게 코드 작성
-
-### 예시
-
-&gt; apple 3 L 
-leapp
-
-&gt; banana 6 R
-banana
-
-&gt; carrot -1 r
-arrotc
-
-&gt; cat -4 R
-atc
 
 ### 예상 순서도 
 ![flowChart](./img/flowChart_step1.png)
