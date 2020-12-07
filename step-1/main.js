@@ -1,20 +1,18 @@
 "use strict";
 
-const btn_submit = document.getElementById("submit");
-btn_submit.addEventListener("click", startGame);
-
 const startGame = () => {
   const text = getText();
   const array = convertTextToArray(text);
   if (checkIsCorrectInput(array)) {
-    pushString(array);
+    const result = pushString(array);
+    showResult(result);
   } else {
-    showResult();
+    showResult("다시 입력하세요");
   }
 };
 
 const getText = () => {
-  return docuemnt.getElementById("inputedText").value;
+  return document.getElementById("inputedText").value;
 };
 
 const convertTextToArray = (text) => {
@@ -56,11 +54,37 @@ const isDirection = (direction) => {
   return directions.includes(direction);
 };
 
-const showResult = () => {
-  console.log("result :");
+const showResult = (result) => {
+  const resultSpan = document.getElementById("result");
+  resultSpan.innerText = result;
 };
 
-const pushString = (array) => {};
-const calculateVector = (num, direction) => {
-  return vector;
+const pushString = (array) => {
+  const [string, num, direction] = array;
+  if (num === 0) {
+    showResult(string);
+    return;
+  }
+  const valueOfDirection = setValueOfDirection(direction);
+  const len = string.length;
+  const abs_num = Math.abs(num) % len;
+  const vector = num * valueOfDirection;
+
+  // vector가 음수면 앞에서 그만큼 잘라서 뒤에 붙임
+  // vector갸 양수면 뒤에서 그만큼 잘라서 앞에 붙임
+  const left = vector < 0 ? string.slice(abs_num) : string.slice(len - abs_num);
+  const right =
+    vector < 0 ? string.slice(0, abs_num) : string.slice(0, len - abs_num);
+  return left + right;
 };
+
+const setValueOfDirection = (direction) => {
+  if (direction === "L" || direction === "l") {
+    return -1;
+  } else if (direction === "R" || direction === "r") {
+    return 1;
+  }
+};
+
+const btn_submit = document.getElementById("submit");
+btn_submit.addEventListener("click", startGame);
