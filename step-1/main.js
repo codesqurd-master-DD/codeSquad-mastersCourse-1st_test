@@ -2,6 +2,7 @@
 
 const startGame = () => {
   const text = getText();
+  removeInputValue();
   const array = convertTextToArray(text);
   if (checkIsCorrectInput(array)) {
     const result = pushString(array);
@@ -13,6 +14,12 @@ const startGame = () => {
 
 const getText = () => {
   return document.getElementById("inputedText").value;
+};
+
+const removeInputValue = () => {
+  const inputBox = document.getElementById("inputedText");
+  inputBox.value = "";
+  inputBox.focus();
 };
 
 const convertTextToArray = (text) => {
