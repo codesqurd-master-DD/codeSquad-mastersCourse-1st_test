@@ -9,16 +9,16 @@
 ### 예시
 홀추 줄은 입력, 짝수 줄은 출력이다. 
 
-    &gt; apple 3 L 
+    > apple 3 L 
     leapp
 
-    &gt; banana 6 R
+    > banana 6 R
     banana
 
-    &gt; carrot -1 r
+    > carrot -1 r
     arrotc
 
-    &gt; cat -4 R
+    > cat -4 R
     atc
 
 ### 1단계 요구사항
@@ -27,24 +27,28 @@
 
 ### 예상 순서도 
 ![flowChart](./img/flowChart_step1.png)
-대략적으로 예상해본 순서도 
 
 ### 예상하기
 
-split(' ')으로 배열화하면 [단어, 숫자, 방향]으로 길이가 3인 array가 나와야한다.
+split(' ')으로 배열화하면 [단어, 숫자, 방향]으로 길이가 3인 array가 나와야한다.   
 길이가 3이 아니거나, 길이가 3이더라도 0 1 2인덱스의 요소가 단어, 숫자, 방향이 아니라면 오류를 내야함.
 
 check(array) 
-- 함수에서 제대로된 문자가 입력됐는지(숫자가 섞였는가? 띄어쓰기를 했는가?),
-- 숫자가 정해진 범위내에 속하는지 체크
-- R(r), L(l)외에 다른 것이 들어왔는지 체크 
+- array[0]이 함수에서 제대로된 단어 입력시(숫자가 섞였는가? 한글이 섞여있는가? => 혹은 상관없음?) return false
+- array[1]이 숫자가 정해진 범위를 넘어서면 return false
+- array[2]이 R(r), L(l)외에 다른 것이 return false
+- 세 조건을 모두 만족하면 return true
 
-startGame(array)
-비구조화 할당으로 array의 요소를 string, num, direction으로 나눔
+startGame(array)   
+check()가 true를 return하면 실행   
+비구조화 할당으로 array의 요소를 string, num, direction으로 나눔   
+이때 num이 0이라면 종료하고 return string   
+direction * num으로 vector 값을 얻어낸다.(최종으로 음수면 왼쪽, 양수면 오른쪽으로)
 
-pushString호출
-?? num만큼 pushString을 호출하는것과 pushString에 num을 인자로 넘겨 그 안에서 반복문을 실행하는 것이 큰 차이가 있을까??
+pushString호출   
+?? num만큼 pushString을 호출하는것과 pushString에 num을 인자로 넘겨    그 안에서 반복문을 실행하는 것이 큰 차이가 있을까??   
 혹은 재귀로하는게 더 직관적일까?(근데 재귀로 하면 느림)
 
-pushString(string, direction)
+pushString(string, direction)   
 string을 direction 방향으로 한 칸씩 민다.
+최종 결과 return 

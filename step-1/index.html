@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>단어 밀어내기</title>
+    <style>
+      #root {
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        border: 1px solid black;
+        border-radius: 10px;
+        margin-top: 80px;
+        padding: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="container">
+        <h1>단어 밀어내기</h1>
+        <hr />
+        <p>입력한 단어를, 입력한 숫자만큼, 입력한 방향으로 밀어드립니다.</p>
+        <p></p>
+        <p>단어, 숫자(-100&lt;N&lt;100), L or R 을 띄어쓰기로 구분해서 순서대로 입력해주세요.</p>
+        <p>
+          <h4>예시</h4> 
+          > apple 3 L<br />
+          leapp<br />
+          > banana 6 R<br />
+          banana
+        </p>
+        <input id="input" type="text" />
+        <button id="submit">확인</button>
+        <div>result :<span id="result"></span></div>
+      </div>
+    </div>
+  </body>
+</html>
