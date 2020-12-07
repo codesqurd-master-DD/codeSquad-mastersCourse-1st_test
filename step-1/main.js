@@ -3,9 +3,14 @@
 const btn_submit = document.getElementById("submit");
 btn_submit.addEventListener("click", startGame);
 
-
 const startGame = () => {
-    
+  const text = getText();
+  const array = convertTextToArray(text);
+  if (checkIsCorrectInput(array)) {
+    pushString(array);
+  } else {
+    showResult();
+  }
 };
 
 const getText = () => {
@@ -13,20 +18,18 @@ const getText = () => {
 };
 
 const convertTextToArray = (text) => {
-    return array
+  return array;
 };
 
 const checkIsCorrectInput = (array) => {
-    return true
-}
+  return true;
+};
 
 const showResult = () => {
-    console.log('result :')
-}
+  console.log("result :");
+};
 
-const pushString = (array) => {
-    
-}
+const pushString = (array) => {};
 const calculateVector = (num, direction) => {
-    return vector
-}
+  return vector;
+};
