@@ -24,6 +24,15 @@ const convertTextToArray = (text) => {
 const checkIsCorrectInput = (array) => {
   if (array.length !== 3) return false;
   const [string, num, direction] = array;
+
+  if (!isString(string)) return false;
+
+  const number = Number(num);
+  if (!Number.isInteger(number)) return false;
+
+  if (!isDirection(direction)) return false;
+
+  return true;
 };
 
 const isString = (string) => {
@@ -42,12 +51,11 @@ const isString = (string) => {
   return true;
 };
 
-const isNum = (num) => {
-  const number = Number(num);
-  if (!Number.isInteger(number)) return false;
+const isDirection = (direction) => {
+  const directions = ["L", "l", "R", "r"];
+  return directions.includes(direction);
 };
 
-const isDirection = (direction) => {};
 const showResult = () => {
   console.log("result :");
 };
