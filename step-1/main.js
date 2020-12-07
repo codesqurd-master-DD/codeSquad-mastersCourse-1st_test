@@ -95,3 +95,11 @@ const setValueOfDirection = (direction) => {
 
 const btn_submit = document.getElementById("submit");
 btn_submit.addEventListener("click", startGame);
+
+const inputBox = document.getElementById("inputedText");
+
+inputBox.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    startGame();
+  }
+});
