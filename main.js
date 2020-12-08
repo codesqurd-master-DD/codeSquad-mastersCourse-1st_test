@@ -1,5 +1,10 @@
 const startGame = async () => {
-  const command = {
+  const CUBE = [
+    ["R", "R", "W"],
+    ["G", "C", "W"],
+    ["G", "B", "B"],
+  ];
+  const commands = {
     //[행or열, index, 방향]
     U: ["horizen", 0, -1],
     "U'": ["horizen", 0, 1],
@@ -15,8 +20,12 @@ const startGame = async () => {
   let inGame = true;
   while (inGame) {
     const text = await inputText();
-    const array = combineQuotesinArray(convertTextToArray(text));
+    const array = convertTextToFilterdArray(text);
     if (true) {
+      array.forEach((str) => {
+        const command = commands[str];
+        pushByCommand(CUBE, command);
+      });
       inGame = false;
     }
   }
@@ -64,24 +73,32 @@ const inputText = () => {
   });
 };
 
-const convertTextToArray = (text) => {
-  return text.split(" ");
+const convertTextToFilterdArray = (text) => {
+  const filter = ["U", "R", "L", "B", "Q", "'"];
+  const filteredArray = text.split("").filter((str) => {
+    return filter.includes(str);
+  });
+  const result = [];
+  for (let i = 0; i < filteredArray.length; i++) {
+    if (filteredArray[i] !== "'") {
+      if (filteredArray[i + 1] === "'") {
+        result.push(filteredArray[i] + filteredArray[i + 1]);
+      } else {
+        result.push(filteredArray[i]);
+      }
+    }
+  }
+  return result;
 };
 
-const combineQuotesinArray = (array) => {
-  return new_array;
+const pushByCommand = (CUBE, command) => {
+  const [level, index, direction] = [command];
+  if (level === "horizen") {
+    pushHorizontally(CUBE, index, direction);
+  } else if (level === "vertical") {
+    pushVertically(CUBE, index, direction);
+  }
 };
-const checkIsCorrectInput = (str) => {
-  const filter = ["U", "R", "L", "B"];
-  if (filter.includes(str)) {return true}else {
-      return false
-  };
-};
-
-const isString = (string) => {
-  return true;
-};
-
 const pushHorizontally = () => {};
 
 const pushVertically = () => {};
