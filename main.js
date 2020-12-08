@@ -8,10 +8,10 @@ const startGame = async () => {
     //[행or열, index, 방향]
     U: ["horizen", 0, "left"],
     "U'": ["horizen", 0, "right"],
-    R: ["vertical", 2, "up"],
-    "R'": ["vertical", 2, "down"],
-    L: ["vertical", 0, "down"],
-    "L'": ["vertical", 0, "up"],
+    R: ["vertical", "last", "up"],
+    "R'": ["vertical", "last", "down"],
+    L: ["vertical", "first", "down"],
+    "L'": ["vertical", "first", "up"],
     B: ["horizen", 2, "right"],
     "B'": ["horizen", 2, "left"],
     Q: "done",
@@ -110,6 +110,45 @@ const pushHorizontally = (cube, index, direction) => {
   }
 };
 
-const pushVertically = (cube, index, direction) => {};
-
+const pushVertically = (cube, index, direction) => {
+  const temp_arr = pushArrayByDirection(
+    makeArrayByTakeoutOfCube(cube, index),
+    direction
+  );
+  console.log("cube :", cube);
+  console.log("temp : ", temp_arr);
+  insertArrayToCube(cube, index, temp_arr);
+};
+const makeArrayByTakeoutOfCube = (cube, index) => {
+  const temp_arr = cube.reduce((acc, curr) => {
+    if (index === "first") {
+      acc.push(curr.shift());
+    } else if (index === "last") {
+      acc.push(curr.pop());
+    }
+    return acc;
+  }, []);
+  return temp_arr;
+};
+const pushArrayByDirection = (array, direction) => {
+  if (direction === "up") {
+    const shift = array.shift();
+    array.push(shift);
+  } else if (direction === "down") {
+    const pop = array.pop();
+    array.unshift(pop);
+  }
+  return array;
+};
+const insertArrayToCube = (cube, index, array) => {
+  if (index === "first") {
+    array.forEach((str, index) => {
+      cube[index].unshift(str);
+    });
+  } else if (index === "last") {
+    array.forEach((str, index) => {
+      cube[index].push(str);
+    });
+  }
+};
 startGame();
