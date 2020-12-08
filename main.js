@@ -14,20 +14,26 @@ const startGame = async () => {
     "L'": ["vertical", "first", "up"],
     B: ["horizen", 2, "right"],
     "B'": ["horizen", 2, "left"],
-    Q: "done",
   };
   explainRule();
+  showCube(DEFAULT_CUBE);
+
   let inGame = true;
   while (inGame) {
     const text = await inputText();
     const array = convertTextToFilterdArray(text);
     if (true) {
       array.forEach((str) => {
+        console.log("> ", str);
+        if (str === "Q") {
+          console.log("bye~");
+          return;
+        }
         const command = commands[str];
         const cube = DEFAULT_CUBE.slice();
         pushByCommand(cube, command);
+        showCube(cube);
       });
-      inGame = false;
     }
   }
 };
@@ -93,7 +99,7 @@ const convertTextToFilterdArray = (text) => {
 };
 
 const pushByCommand = (cube, command) => {
-  const [level, index, direction] = [command];
+  const [level, index, direction] = command;
   if (level === "horizen") {
     pushHorizontally(cube, index, direction);
   } else if (level === "vertical") {
@@ -104,7 +110,7 @@ const pushHorizontally = (cube, index, direction) => {
   if (direction === "left") {
     const shift = cube[index].shift();
     cube[index].push(shift);
-  } else if (direction === "left") {
+  } else if (direction === "right") {
     const pop = cube[index].pop();
     cube[index].unshift(pop);
   }
@@ -115,8 +121,6 @@ const pushVertically = (cube, index, direction) => {
     makeArrayByTakeoutOfCube(cube, index),
     direction
   );
-  console.log("cube :", cube);
-  console.log("temp : ", temp_arr);
   insertArrayToCube(cube, index, temp_arr);
 };
 const makeArrayByTakeoutOfCube = (cube, index) => {
@@ -150,5 +154,11 @@ const insertArrayToCube = (cube, index, array) => {
       cube[index].push(str);
     });
   }
+};
+
+const showCube = (cube) => {
+  cube.forEach((row) => {
+    console.log(row.join(" "));
+  });
 };
 startGame();
