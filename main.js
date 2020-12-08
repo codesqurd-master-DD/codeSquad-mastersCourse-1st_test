@@ -1,9 +1,4 @@
 const startGame = async () => {
-  // 0 1 2
-  // 1
-  // 2
-  // 오른쪽, 아래 방향은 +
-  // 왼쪽, 위 방향은 -
   const command = {
     //[행or열, index, 방향]
     U: ["horizen", 0, -1],
@@ -20,16 +15,11 @@ const startGame = async () => {
   let inGame = true;
   while (inGame) {
     const text = await inputText();
-
+    const array = combineQuotesinArray(convertTextToArray(text));
     if (true) {
       inGame = false;
     }
   }
-  // 게임에 관한 설명
-  // 입력 받기
-  // 입력 내용 검사하기
-  // 통과한 내용 배열로 나누기
-  // 배열 요소 반복하며 순환시작
 };
 
 const explainRule = () => {
@@ -74,14 +64,18 @@ const inputText = () => {
   });
 };
 
-const convertTextToArray = (t) => {
-  const text = t.split(" ");
-
-  return;
+const convertTextToArray = (text) => {
+  return text.split(" ");
 };
 
-const checkIsCorrectInput = (array) => {
-  return true;
+const combineQuotesinArray = (array) => {
+  return new_array;
+};
+const checkIsCorrectInput = (str) => {
+  const filter = ["U", "R", "L", "B"];
+  if (filter.includes(str)) {return true}else {
+      return false
+  };
 };
 
 const isString = (string) => {
