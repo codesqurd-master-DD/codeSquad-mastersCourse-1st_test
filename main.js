@@ -1,19 +1,19 @@
 const startGame = async () => {
-  const CUBE = [
+  const DEFAULT_CUBE = [
     ["R", "R", "W"],
     ["G", "C", "W"],
     ["G", "B", "B"],
   ];
   const commands = {
     //[행or열, index, 방향]
-    U: ["horizen", 0, -1],
-    "U'": ["horizen", 0, 1],
-    R: ["vertical", 2, -1],
-    "R'": ["vertical", 2, 1],
-    L: ["vertical", 0, 1],
-    "L'": ["vertical", 0, -1],
-    B: ["horizen", 2, 1],
-    "B'": ["horizen", 2, -1],
+    U: ["horizen", 0, "left"],
+    "U'": ["horizen", 0, "right"],
+    R: ["vertical", 2, "up"],
+    "R'": ["vertical", 2, "down"],
+    L: ["vertical", 0, "down"],
+    "L'": ["vertical", 0, "up"],
+    B: ["horizen", 2, "right"],
+    "B'": ["horizen", 2, "left"],
     Q: "done",
   };
   explainRule();
@@ -24,7 +24,8 @@ const startGame = async () => {
     if (true) {
       array.forEach((str) => {
         const command = commands[str];
-        pushByCommand(CUBE, command);
+        const cube = DEFAULT_CUBE.slice();
+        pushByCommand(cube, command);
       });
       inGame = false;
     }
@@ -91,16 +92,24 @@ const convertTextToFilterdArray = (text) => {
   return result;
 };
 
-const pushByCommand = (CUBE, command) => {
+const pushByCommand = (cube, command) => {
   const [level, index, direction] = [command];
   if (level === "horizen") {
-    pushHorizontally(CUBE, index, direction);
+    pushHorizontally(cube, index, direction);
   } else if (level === "vertical") {
-    pushVertically(CUBE, index, direction);
+    pushVertically(cube, index, direction);
   }
 };
-const pushHorizontally = () => {};
+const pushHorizontally = (cube, index, direction) => {
+  if (direction === "left") {
+    const shift = cube[index].shift();
+    cube[index].push(shift);
+  } else if (direction === "left") {
+    const pop = cube[index].pop();
+    cube[index].unshift(pop);
+  }
+};
 
-const pushVertically = () => {};
+const pushVertically = (cube, index, direction) => {};
 
 startGame();
