@@ -1,4 +1,21 @@
 const startGame = async () => {
+  // 0 1 2
+  // 1
+  // 2
+  // 오른쪽, 아래 방향은 +
+  // 왼쪽, 위 방향은 -
+  const command = {
+    //[행or열, index, 방향]
+    U: ["horizen", 0, -1],
+    "U'": ["horizen", 0, 1],
+    R: ["vertical", 2, -1],
+    "R'": ["vertical", 2, 1],
+    L: ["vertical", 0, 1],
+    "L'": ["vertical", 0, -1],
+    B: ["horizen", 2, 1],
+    "B'": ["horizen", 2, -1],
+    Q: "done",
+  };
   explainRule();
   let inGame = true;
   while (inGame) {
@@ -57,8 +74,10 @@ const inputText = () => {
   });
 };
 
-const convertTextToArray = (text) => {
-  return array;
+const convertTextToArray = (t) => {
+  const text = t.split(" ");
+
+  return;
 };
 
 const checkIsCorrectInput = (array) => {
