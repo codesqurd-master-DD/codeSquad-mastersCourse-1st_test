@@ -4,7 +4,7 @@ const startGame = async () => {
     ["G", "C", "W"],
     ["G", "B", "B"],
   ];
-  const commands = {
+  const COMMANDS = {
     //[행or열, index, 방향]
     U: ["horizen", 0, "left"],
     "U'": ["horizen", 0, "right"],
@@ -22,19 +22,18 @@ const startGame = async () => {
   while (inGame) {
     const text = await inputText();
     const array = convertTextToFilterdArray(text);
-    if (true) {
-      array.forEach((str) => {
-        console.log("> ", str);
-        if (str === "Q") {
-          console.log("bye~");
-          return;
-        }
-        const command = commands[str];
-        const cube = DEFAULT_CUBE.slice();
-        pushByCommand(cube, command);
-        showCube(cube);
-      });
-    }
+    array.forEach((str) => {
+      console.log("> ", str);
+      if (str === "Q") {
+        console.log("bye~");
+        inGame = false;
+        return;
+      }
+      const command = COMMANDS[str];
+      const cube = DEFAULT_CUBE.slice();
+      pushByCommand(cube, command);
+      showCube(cube);
+    });
   }
 };
 
@@ -67,11 +66,11 @@ const inputText = () => {
   return new Promise((resolve) => {
     const prompt = require("prompt");
     prompt.start();
-    prompt.get("line", function (err, result) {
+    prompt.get("cube", function (err, result) {
       if (err) {
         return onErr(err);
       }
-      resolve(result.line);
+      resolve(result.cube);
     });
     function onErr(err) {
       console.log(err);
@@ -89,7 +88,9 @@ const convertTextToFilterdArray = (text) => {
   for (let i = 0; i < filteredArray.length; i++) {
     if (filteredArray[i] !== "'") {
       if (filteredArray[i + 1] === "'") {
-        result.push(filteredArray[i] + filteredArray[i + 1]);
+        if (filteredArray[i] !== "Q") {
+          result.push(filteredArray[i] + filteredArray[i + 1]);
+        }
       } else {
         result.push(filteredArray[i]);
       }
