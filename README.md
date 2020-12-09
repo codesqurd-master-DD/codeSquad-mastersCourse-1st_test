@@ -1,6 +1,6 @@
 # codeSquad-mastersCourse-test step-1
 
-## [Demo page](https://jjunyjjuny.github.io/codeSquad-mastersCourse-1st_test/)
+## [Demo page](https://jjunyjjuny.github.io/codeSquad-mastersCourse-1st_test/step-1/index.html)
 
 ## 단어 밀어내기 구현하기
 
