@@ -130,6 +130,7 @@ const startGame = async () => {
     const input = await inputText();
     const array = converInputToArray(input);
     const checker = checkIsCorrectInput(array);
+    console.log(checker);
     if (!checker) {
       continue;
     }
@@ -221,7 +222,30 @@ const converInputToArray = (text) => {
   return result;
 };
 const checkIsCorrectInput = (array) => {
-  return true;
+  const checker = [
+    "U",
+    "U'",
+    "L",
+    "L'",
+    "F",
+    "F'",
+    "R",
+    "R'",
+    "B",
+    "B'",
+    "D",
+    "D'",
+    "Q",
+    "M'",
+  ];
+  let result = true;
+  array.forEach((str) => {
+    if (!checker.includes(str)) {
+      console.log(`${str} 은(는) 실행 할 수 없는 명령어입니다!`);
+      result = false;
+    }
+  });
+  return result;
 };
 const shuffleCube = (cube) => {
   return shuffledCube;
