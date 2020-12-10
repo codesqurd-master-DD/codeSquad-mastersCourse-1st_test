@@ -1,9 +1,9 @@
 const startGame = async () => {
   const DEFAULT_CUBE = {
     up: [
-      ["B", "B", "B"],
-      ["B", "B", "B"],
-      ["B", "B", "B"],
+      ["1", "2", "3"],
+      ["4", "5", "6"],
+      ["7", "8", "9"],
     ],
     left: [
       ["W", "W", "W"],
@@ -96,6 +96,7 @@ const startGame = async () => {
         shuffleCube(inGameCube);
       }
       const command = getCommand(str, COMMANDS);
+      console.log(inGameCube);
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
       checkIsAnswer(DEFAULT_CUBE, inGameCube);
@@ -219,15 +220,24 @@ const checkIsAnswer = (answer, ingame) => {
 };
 
 const rotateByCommand = (inGameCube, command) => {
-  const { side, edges, edgeTrun, direction } = [command];
+  const { side, edges, edgeTurn, direction } = command;
+  //   console.log(side, edges, edgeTurn, direction);
   const angle = direction === "cw" ? 1 : 3;
   for (let i = 0; i < angle; i++) {
     rotate90_CW(inGameCube, side);
-    rotateEdge(inGameCube, edges, edgeTrun);
+    rotateEdge(inGameCube, edges, edgeTurn);
   }
 };
 
-const rotate90_CW = (inGameCube, side, direction) => {};
+const rotate90_CW = (inGameCube, side) => {
+  //deep clone
+  const temp_side = JSON.parse(JSON.stringify(inGameCube[side]));
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      inGameCube[side][i][j] = temp_side[2 - j][i];
+    }
+  }
+};
 const rotateEdge = (inGameCube, side, edges) => {
   changeForRotate();
   resetChange();
