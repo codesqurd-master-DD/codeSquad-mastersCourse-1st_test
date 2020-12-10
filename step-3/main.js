@@ -130,10 +130,10 @@ const startGame = async () => {
     const input = await inputText();
     const array = converInputToArray(input);
     const checker = checkIsCorrectInput(array);
-    console.log(checker);
     if (!checker) {
       continue;
     }
+    console.log("checker 통과");
     array.forEach((str) => {
       console.log("> ", str);
       if (str === "Q") {
@@ -149,6 +149,7 @@ const startGame = async () => {
       showCube(inGameCube);
       checkIsAnswer(DEFAULT_CUBE, inGameCube);
     });
+    console.log("forEach 통과");
   }
 };
 
@@ -213,10 +214,15 @@ const converInputToArray = (text) => {
   const result = [];
   console.log(temp_arr);
   for (let i = 0; i < temp_arr.length; i++) {
-    if (temp_arr[i + 1] === "'" && temp_arr[i] !== "'") {
-      result.push(temp_arr[i] + temp_arr[i + 1]);
-    } else if (temp_arr[i] !== "'") {
-      result.push(temp_arr[i]);
+    if (temp_arr[i] !== "2" && temp_arr[i] !== "'") {
+      if (temp_arr[i + 1] === "'") {
+        result.push(temp_arr[i] + temp_arr[i + 1]);
+      } else if (temp_arr[i + 1] === "2") {
+        result.push(temp_arr[i]);
+        result.push(temp_arr[i]);
+      } else {
+        result.push(temp_arr[i]);
+      }
     }
   }
   return result;
