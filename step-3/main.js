@@ -121,9 +121,10 @@ const startGame = async () => {
   let count = 0;
 
   explainRule();
-  showCube(DEFAULT_CUBE);
-  const answerCube = shuffleCube(Object.assign({}, DEFAULT_CUBE));
-  const inGameCube = Object.assign({}, answerCube);
+  // rotate 기능이 구현될때까지 잠시 가림
+  //   const inGameCube = shuffleCube(Object.assign({}, DEFAULT_CUBE));
+  const inGameCube = DEFAULT_CUBE;
+  showCube(inGameCube);
   let inGame = true;
   while (inGame) {
     const input = await inputText();
@@ -145,7 +146,7 @@ const startGame = async () => {
       const command = COMMANDS[str];
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
-      checkIsAnswer(answerCube, inGameCube);
+      checkIsAnswer(DEFAULT_CUBE, inGameCube);
     });
   }
 };
@@ -206,6 +207,17 @@ const inputText = () => {
 };
 
 const converInputToArray = (text) => {
+  console.log(text);
+  const temp_arr = text.split("");
+  const result = [];
+  console.log(temp_arr);
+  for (let i = 0; i < temp_arr.length; i++) {
+    if (temp_arr[i + 1] === "'" && temp_arr[i] !== "'") {
+      result.push(temp_arr[i] + temp_arr[i + 1]);
+    } else if (temp_arr[i] !== "'") {
+      result.push(temp_arr[i]);
+    }
+  }
   return result;
 };
 const checkIsCorrectInput = (array) => {
