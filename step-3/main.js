@@ -40,26 +40,12 @@ const startGame = async () => {
       reset: [2, 1, 0, 3],
       direction: "cw",
     },
-    "U'": {
-      side: "up",
-      edge: ["back", "right", "front", "left"],
-      temp_turn: [2, 3, 0, 1],
-      reset: [2, 1, 0, 3],
-      direction: "ccw",
-    },
     L: {
       side: "left",
       edge: ["up", "front", "down", "back"],
       temp_turn: [3, 0, 1, 0],
       reset: [1, 0, 3, 0],
       direction: "cw",
-    },
-    "L'": {
-      side: "left",
-      edge: ["up", "front", "down", "back"],
-      temp_turn: [3, 0, 1, 0],
-      reset: [1, 0, 3, 0],
-      direction: "ccw",
     },
     F: {
       side: "front",
@@ -68,26 +54,12 @@ const startGame = async () => {
       reset: [0, 0, 0, 0],
       direction: "cw",
     },
-    "F'": {
-      side: "front",
-      edge: ["up", "right", "down", "left"],
-      temp_turn: [0, 0, 0, 0],
-      reset: [0, 0, 0, 0],
-      direction: "ccw",
-    },
     R: {
       side: "right",
       edge: ["up", "back", "down", "fornt"],
       temp_turn: [1, 0, 3, 0],
       reset: [3, 0, 1, 0],
       direction: "cw",
-    },
-    "R'": {
-      side: "right",
-      edge: ["up", "back", "down", "fornt"],
-      temp_turn: [1, 0, 3, 0],
-      reset: [3, 0, 1, 0],
-      direction: "ccw",
     },
     B: {
       side: "back",
@@ -96,26 +68,12 @@ const startGame = async () => {
       reset: [1, 0, 1, 0],
       direction: "cw",
     },
-    "B'": {
-      side: "back",
-      edge: ["up", "left", "down", "right"],
-      temp_turn: [2, 0, 2, 0],
-      reset: [2, 0, 2, 0],
-      direction: "ccw",
-    },
     D: {
       side: "down",
       edge: ["front", "right", "back", "left"],
       temp_turn: [0, 1, 2, 3],
       reset: [0, 3, 2, 1],
       direction: "cw",
-    },
-    "D'": {
-      side: "down",
-      edge: ["front", "right", "back", "left"],
-      temp_turn: [0, 1, 2, 3],
-      reset: [0, 3, 2, 1],
-      direction: "ccw",
     },
   };
   let count = 0;
@@ -133,7 +91,6 @@ const startGame = async () => {
     if (!checker) {
       continue;
     }
-    console.log("checker 통과");
     array.forEach((str) => {
       console.log("> ", str);
       if (str === "Q") {
@@ -144,12 +101,11 @@ const startGame = async () => {
       if (str === "M") {
         shuffleCube(inGameCube);
       }
-      const command = COMMANDS[str];
+      const command = getCommand(str, COMMANDS);
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
       checkIsAnswer(DEFAULT_CUBE, inGameCube);
     });
-    console.log("forEach 통과");
   }
 };
 
@@ -190,7 +146,6 @@ W W W    O O O     G G G     Y Y Y
       EX) UU'RL2B
       `);
 };
-
 const inputText = () => {
   return new Promise((resolve) => {
     const prompt = require("prompt");
@@ -207,7 +162,6 @@ const inputText = () => {
     }
   });
 };
-
 const converInputToArray = (text) => {
   console.log(text);
   const temp_arr = text.split("");
@@ -252,6 +206,19 @@ const checkIsCorrectInput = (array) => {
     }
   });
   return result;
+};
+const getCommand = (str, COMMANDS) => {
+  let command = {};
+  if (str.length == 2) {
+    console.log(str);
+    command = { ...COMMANDS[str[0]] };
+    command.direction = "ccw";
+  } else {
+    console.log(str);
+    command = { ...COMMANDS[str] };
+  }
+  console.log(command);
+  return command;
 };
 const shuffleCube = (cube) => {
   return shuffledCube;
