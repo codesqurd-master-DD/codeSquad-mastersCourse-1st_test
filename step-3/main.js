@@ -34,45 +34,39 @@ const startGame = async () => {
   const COMMANDS = {
     U: {
       side: "up",
-      //side를 기준 삼았을 때 up, right, down, left edge들
-      edge: ["back", "right", "front", "left"],
-      temp_turn: [2, 3, 0, 1],
-      reset: [2, 1, 0, 3],
+      //side를 기준 삼았을 때 up, right, down, left edges들
+      edges: ["back", "right", "front", "left"],
+      edgeTurn: { turn: [2, 3, 0, 1], reset: [2, 1, 0, 3] },
       direction: "cw",
     },
     L: {
       side: "left",
-      edge: ["up", "front", "down", "back"],
-      temp_turn: [3, 0, 1, 0],
-      reset: [1, 0, 3, 0],
+      edges: ["up", "front", "down", "back"],
+      edgeTurn: { turn: [3, 0, 1, 0], reset: [1, 0, 3, 0] },
       direction: "cw",
     },
     F: {
       side: "front",
-      edge: ["up", "right", "down", "left"],
-      temp_turn: [0, 0, 0, 0],
-      reset: [0, 0, 0, 0],
+      edges: ["up", "right", "down", "left"],
+      edgeTurn: { turn: [0, 0, 0, 0], reset: [0, 0, 0, 0] },
       direction: "cw",
     },
     R: {
       side: "right",
-      edge: ["up", "back", "down", "fornt"],
-      temp_turn: [1, 0, 3, 0],
-      reset: [3, 0, 1, 0],
+      edges: ["up", "back", "down", "fornt"],
+      edgeTurn: { turn: [1, 0, 3, 0], reset: [3, 0, 1, 0] },
       direction: "cw",
     },
     B: {
       side: "back",
-      edge: ["up", "left", "down", "right"],
-      temp_turn: [2, 0, 2, 0],
-      reset: [1, 0, 1, 0],
+      edges: ["up", "left", "down", "right"],
+      edgeTurn: { turn: [2, 0, 2, 0], reset: [1, 0, 1, 0] },
       direction: "cw",
     },
     D: {
       side: "down",
-      edge: ["front", "right", "back", "left"],
-      temp_turn: [0, 1, 2, 3],
-      reset: [0, 3, 2, 1],
+      edges: ["front", "right", "back", "left"],
+      edgeTurn: { turn: [0, 1, 2, 3], reset: [0, 3, 2, 1] },
       direction: "cw",
     },
   };
@@ -210,14 +204,11 @@ const checkIsCorrectInput = (array) => {
 const getCommand = (str, COMMANDS) => {
   let command = {};
   if (str.length == 2) {
-    console.log(str);
     command = { ...COMMANDS[str[0]] };
     command.direction = "ccw";
   } else {
-    console.log(str);
     command = { ...COMMANDS[str] };
   }
-  console.log(command);
   return command;
 };
 const shuffleCube = (cube) => {
@@ -228,11 +219,11 @@ const checkIsAnswer = (answer, ingame) => {
 };
 
 const rotateByCommand = (inGameCube, command) => {
-  const [side, edges, direction] = [command];
+  const { side, edges, edgeTrun, direction } = [command];
   const angle = direction === "cw" ? 1 : 3;
   for (let i = 0; i < angle; i++) {
     rotate90_CW(inGameCube, side);
-    rotateEdge(inGameCube, edges);
+    rotateEdge(inGameCube, edges, edgeTrun);
   }
 };
 
