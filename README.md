@@ -31,7 +31,7 @@
 
 ### 예상 순서도
 
-![flowChartBefore](./img/flowChart_step1_before.png)
+![flowChartBefore](./step-1/img/flowChart_step1_before.png)
 
 ### 예상하기
 
