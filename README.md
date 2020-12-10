@@ -61,7 +61,7 @@ string을 direction 방향으로 한 칸씩 민다.
 
 ### 결과 순서도
 
-![flowChartAfter](./img/flowChart_step1_after.png)
+![flowChartAfter](./step-1/img/flowChart_step1_after.png)
 
 ### 결과
 
