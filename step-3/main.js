@@ -249,7 +249,24 @@ const rotateEdge = (inGameCube, edges, edgeTurn) => {
   });
 };
 const moveEdge = (inGameCube, edges) => {
-  
+  const [up, right, down, left] = edges;
+  const [temp1, temp2, temp3] = [
+    inGameCube[up][2][0],
+    inGameCube[up][2][1],
+    inGameCube[up][2][2],
+  ];
+  inGameCube[up][2][2] = inGameCube[left][0][2];
+  inGameCube[up][2][1] = inGameCube[left][1][2];
+  inGameCube[up][2][0] = inGameCube[left][2][2];
+  inGameCube[left][0][2] = inGameCube[down][0][0];
+  inGameCube[left][1][2] = inGameCube[down][0][1];
+  inGameCube[left][2][2] = inGameCube[down][0][2];
+  inGameCube[down][0][2] = inGameCube[right][0][0];
+  inGameCube[down][0][1] = inGameCube[right][1][0];
+  inGameCube[down][0][0] = inGameCube[right][2][0];
+  inGameCube[right][0][0] = temp1;
+  inGameCube[right][1][0] = temp2;
+  inGameCube[right][2][0] = temp3;
 };
 
 const showCube = (cube) => {};
