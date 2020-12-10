@@ -36,37 +36,37 @@ const startGame = async () => {
       side: "up",
       //side를 기준 삼았을 때 up, right, down, left edges들
       edges: ["back", "right", "front", "left"],
-      edgeTurn: { turn: [2, 3, 0, 1], reset: [2, 1, 0, 3] },
+      edgeTurn: [2, 3, 0, 1],
       direction: "cw",
     },
     L: {
       side: "left",
       edges: ["up", "front", "down", "back"],
-      edgeTurn: { turn: [3, 0, 1, 0], reset: [1, 0, 3, 0] },
+      edgeTurn: [3, 0, 1, 0],
       direction: "cw",
     },
     F: {
       side: "front",
       edges: ["up", "right", "down", "left"],
-      edgeTurn: { turn: [0, 0, 0, 0], reset: [0, 0, 0, 0] },
+      edgeTurn: [0, 0, 0, 0],
       direction: "cw",
     },
     R: {
       side: "right",
       edges: ["up", "back", "down", "fornt"],
-      edgeTurn: { turn: [1, 0, 3, 0], reset: [3, 0, 1, 0] },
+      edgeTurn: [1, 0, 3, 0],
       direction: "cw",
     },
     B: {
       side: "back",
       edges: ["up", "left", "down", "right"],
-      edgeTurn: { turn: [2, 0, 2, 0], reset: [1, 0, 1, 0] },
+      edgeTurn: [2, 0, 2, 0],
       direction: "cw",
     },
     D: {
       side: "down",
       edges: ["front", "right", "back", "left"],
-      edgeTurn: { turn: [0, 1, 2, 3], reset: [0, 3, 2, 1] },
+      edgeTurn: [0, 1, 2, 3],
       direction: "cw",
     },
   };
@@ -96,7 +96,6 @@ const startGame = async () => {
         shuffleCube(inGameCube);
       }
       const command = getCommand(str, COMMANDS);
-      console.log(inGameCube);
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
       checkIsAnswer(DEFAULT_CUBE, inGameCube);
@@ -158,10 +157,8 @@ const inputText = () => {
   });
 };
 const converInputToArray = (text) => {
-  console.log(text);
   const temp_arr = text.split("");
   const result = [];
-  console.log(temp_arr);
   for (let i = 0; i < temp_arr.length; i++) {
     if (temp_arr[i] !== "2" && temp_arr[i] !== "'") {
       if (temp_arr[i + 1] === "'") {
@@ -238,12 +235,23 @@ const rotate90_CW = (inGameCube, side) => {
     }
   }
 };
-const rotateEdge = (inGameCube, side, edges) => {
-  changeForRotate();
-  resetChange();
+const rotateEdge = (inGameCube, edges, edgeTurn) => {
+  edges.forEach((edge, index) => {
+    const angle = edgeTurn[index];
+    for (let i = 0; i < angle; i++) {
+      rotate90_CW(inGameCube, edge);
+    }
+    moveEdge(inGameCube, edges);
+    //reset
+    for (let j = 0; j < 4 - angle; j++) {
+      rotate90_CW(inGameCube, edge);
+    }
+  });
 };
-const changeForRotate = (side, edges) => {};
-const resetChange = (side, edges) => {};
+const moveEdge = (inGameCube, edges) => {
+  
+};
+
 const showCube = (cube) => {};
 
 startGame();
