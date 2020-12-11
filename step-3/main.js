@@ -15,8 +15,8 @@ const startGame = async (init) => {
   while (inGame) {
     const input = await inputText();
     const array = converInputToArray(input);
-    const checker = checkIsCorrectInput(array);
-    if (!checker) {
+    const isWrongInput = checkIsWrongInput(array);
+    if (isWrongInput) {
       continue;
     }
     array.forEach((str) => {
@@ -119,7 +119,7 @@ const converInputToArray = (text) => {
   }
   return result;
 };
-const checkIsCorrectInput = (array) => {
+const checkIsWrongInput = (array) => {
   const checker = [
     "U",
     "U'",
