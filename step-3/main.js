@@ -269,6 +269,26 @@ const moveEdge = (inGameCube, edges) => {
   inGameCube[right][2][0] = temp3;
 };
 
-const showCube = (cube) => {};
+const showCube = (cube) => {
+  showTopAndBot(cube.up);
+  showMiddle(cube);
+  showTopAndBot(cube.down);
+};
 
+const showTopAndBot = (side) => {
+  console.log(`
+       ${side[0].join(" ")}
+       ${side[1].join(" ")}
+       ${side[2].join(" ")}
+    `);
+};
+const showMiddle = (cube) => {
+  for (let i = 0; i < 3; i++) {
+    console.log(
+      `${cube.left[i].join(" ")}  ${cube.front[i].join(" ")}  ${cube.right[
+        i
+      ].join(" ")}  ${cube.back[i].join(" ")}`
+    );
+  }
+};
 startGame();
