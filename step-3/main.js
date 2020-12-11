@@ -53,7 +53,7 @@ const startGame = async () => {
     },
     R: {
       side: "right",
-      edges: ["up", "back", "down", "fornt"],
+      edges: ["up", "back", "down", "front"],
       edgeTurn: [1, 0, 3, 0],
       direction: "cw",
     },
@@ -236,19 +236,22 @@ const rotate90_CW = (inGameCube, side) => {
   }
 };
 const rotateEdge = (inGameCube, edges, edgeTurn) => {
+  turnEdgeSide(inGameCube, edges, edgeTurn);
+  moveEdge(inGameCube, edges);
+  //reset
+  turnEdgeSide(inGameCube, edges, edgeTurn, false);
+};
+const turnEdgeSide = (inGameCube, edges, edgeTurn, ccw = true) => {
   edges.forEach((edge, index) => {
-    const angle = edgeTurn[index];
+    const angle = ccw ? edgeTurn[index] : 4 - edgeTurn[index];
     for (let i = 0; i < angle; i++) {
-      rotate90_CW(inGameCube, edge);
-    }
-    moveEdge(inGameCube, edges);
-    //reset
-    for (let j = 0; j < 4 - angle; j++) {
       rotate90_CW(inGameCube, edge);
     }
   });
 };
+
 const moveEdge = (inGameCube, edges) => {
+  console.log(edges);
   const [up, right, down, left] = edges;
   const [temp1, temp2, temp3] = [
     inGameCube[up][2][0],
