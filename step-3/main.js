@@ -75,7 +75,7 @@ const startGame = async () => {
   explainRule();
   // rotate 기능이 구현될때까지 잠시 가림
   //   const inGameCube = shuffleCube(Object.assign({}, DEFAULT_CUBE));
-  const inGameCube = DEFAULT_CUBE;
+  const inGameCube = JSON.parse(JSON.stringify(DEFAULT_CUBE));
   showCube(inGameCube);
   let inGame = true;
   while (inGame) {
@@ -98,7 +98,11 @@ const startGame = async () => {
       const command = getCommand(str, COMMANDS);
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
-      checkIsAnswer(DEFAULT_CUBE, inGameCube);
+      if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
+        inforEndGame();
+        inGame = false;
+        return;
+      }
     });
   }
 };
@@ -213,9 +217,15 @@ const shuffleCube = (cube) => {
   return shuffledCube;
 };
 const checkIsAnswer = (answer, ingame) => {
-  console.log("ㅊㅋㅊㅋ, 시간, 횟수 등");
+  if (JSON.stringify(answer) === JSON.stringify(ingame)) {
+    return true;
+  } else {
+    return false;
+  }
 };
-
+const inforEndGame = () => {
+  console.log("게임 끝!");
+};
 const rotateByCommand = (inGameCube, command) => {
   const { side, edges, edgeTurn, direction } = command;
   //   console.log(side, edges, edgeTurn, direction);
