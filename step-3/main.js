@@ -78,6 +78,7 @@ const startGame = async () => {
   const inGameCube = JSON.parse(JSON.stringify(DEFAULT_CUBE));
   showCube(inGameCube);
   let inGame = true;
+  const start = new Date();
   while (inGame) {
     const input = await inputText();
     const array = converInputToArray(input);
@@ -86,6 +87,7 @@ const startGame = async () => {
       continue;
     }
     array.forEach((str) => {
+      count++;
       console.log("> ", str);
       if (str === "Q") {
         console.log("bye~");
@@ -99,7 +101,7 @@ const startGame = async () => {
       rotateByCommand(inGameCube, command);
       showCube(inGameCube);
       if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
-        inforEndGame();
+        inforEndGame(start, count);
         inGame = false;
         return;
       }
@@ -223,8 +225,19 @@ const checkIsAnswer = (answer, ingame) => {
     return false;
   }
 };
-const inforEndGame = () => {
-  console.log("게임 끝!");
+const inforEndGame = (start, count) => {
+  measureRunTime(start);
+  console.log(`조작갯수 : ${count}`);
+  console.log("이용해주셔서 감사합니다 BYE~");
+};
+const measureRunTime = (start) => {
+  const minute = new Date().getMinutes() - start.getMinutes();
+  const second = new Date().getSeconds() - start.getSeconds();
+  console.log(
+    `경과시간 : ${minute < 10 ? "0" + minute : minute}:${
+      second < 10 ? "0" + second : second
+    }`
+  );
 };
 const rotateByCommand = (inGameCube, command) => {
   const { side, edges, edgeTurn, direction } = command;
