@@ -10,7 +10,7 @@ const startGame = async (init) => {
   const start = new Date();
   let inGame = true;
   let count = 0;
-  // explainRule();
+  explainRule();
   showCube(inGameCube);
   while (inGame) {
     const input = await inputText();
@@ -21,18 +21,7 @@ const startGame = async (init) => {
     }
     array.forEach((str) => {
       count++;
-      console.log("> ", str);
-      if (str === "Q") {
-        console.log("bye~");
-        inGame = false;
-        return;
-      }
-      if (str === "M") {
-        shuffleCube(inGameCube, COMMANDS);
-      } else {
-        const command = getCommand(str, COMMANDS);
-        rotateByCommand(inGameCube, command);
-      }
+      proceedByStr(inGameCube, command, str);
       showCube(inGameCube);
       if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
         inforEndGame(start, count);
@@ -40,6 +29,20 @@ const startGame = async (init) => {
         return;
       }
     });
+  }
+};
+const proceedByStr = (inGameCube, command, str) => {
+  console.log("> ", str);
+  if (str === "Q") {
+    console.log("bye~");
+    inGame = false;
+    return;
+  }
+  if (str === "M") {
+    shuffleCube(inGameCube, COMMANDS);
+  } else {
+    const command = getCommand(str, COMMANDS);
+    rotateByCommand(inGameCube, command);
   }
 };
 const deepCopyCube = (original) => {
