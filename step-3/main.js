@@ -1,87 +1,17 @@
-const startGame = async () => {
-  const DEFAULT_CUBE = {
-    up: [
-      ["1", "2", "3"],
-      ["4", "5", "6"],
-      ["7", "8", "9"],
-    ],
-    left: [
-      ["W", "W", "W"],
-      ["W", "W", "W"],
-      ["W", "W", "W"],
-    ],
-    front: [
-      ["O", "O", "O"],
-      ["O", "O", "O"],
-      ["O", "O", "O"],
-    ],
-    right: [
-      ["G", "G", "G"],
-      ["G", "G", "G"],
-      ["G", "G", "G"],
-    ],
-    back: [
-      ["Y", "Y", "Y"],
-      ["Y", "Y", "Y"],
-      ["Y", "Y", "Y"],
-    ],
-    down: [
-      ["R", "R", "R"],
-      ["R", "R", "R"],
-      ["R", "R", "R"],
-    ],
-  };
-  const COMMANDS = {
-    U: {
-      side: "up",
-      //side를 기준 삼았을 때 up, right, down, left edges들
-      edges: ["back", "right", "front", "left"],
-      edgeTurn: [2, 3, 0, 1],
-      direction: "cw",
-    },
-    L: {
-      side: "left",
-      edges: ["up", "front", "down", "back"],
-      edgeTurn: [3, 0, 1, 0],
-      direction: "cw",
-    },
-    F: {
-      side: "front",
-      edges: ["up", "right", "down", "left"],
-      edgeTurn: [0, 0, 0, 0],
-      direction: "cw",
-    },
-    R: {
-      side: "right",
-      edges: ["up", "back", "down", "front"],
-      edgeTurn: [1, 0, 3, 0],
-      direction: "cw",
-    },
-    B: {
-      side: "back",
-      edges: ["up", "left", "down", "right"],
-      edgeTurn: [2, 0, 2, 0],
-      direction: "cw",
-    },
-    D: {
-      side: "down",
-      edges: ["front", "right", "back", "left"],
-      edgeTurn: [0, 1, 2, 3],
-      direction: "cw",
-    },
-  };
-  let count = 0;
+const init = () => {
+  const { DEFAULT_CUBE, COMMANDS } = require("./defaultData");
+  const inGameCube = deepCopyCube(DEFAULT_CUBE);
+  shuffleCube(inGameCube, COMMANDS);
+  return { inGameCube, COMMANDS, DEFAULT_CUBE };
+};
 
-  explainRule();
-  // rotate 기능이 구현될때까지 잠시 가림
-  const inGameCube = shuffleCube(
-    JSON.parse(JSON.stringify(DEFAULT_CUBE)),
-    COMMANDS
-  );
-  //   const inGameCube = JSON.parse(JSON.stringify(DEFAULT_CUBE));
-  showCube(inGameCube);
-  let inGame = true;
+const startGame = async (init) => {
+  const { inGameCube, COMMANDS, DEFAULT_CUBE } = init;
   const start = new Date();
+  let inGame = true;
+  let count = 0;
+  // explainRule();
+  showCube(inGameCube);
   while (inGame) {
     const input = await inputText();
     const array = converInputToArray(input);
@@ -112,22 +42,24 @@ const startGame = async () => {
     });
   }
 };
-
+const deepCopyCube = (original) => {
+  return JSON.parse(JSON.stringify(original));
+};
 const explainRule = () => {
   console.log(`
       루빅스 큐브 게임에 오신걸 환영합니다!
           
-         B B B  
-         B B B
-         B B B
+       B B B  
+       B B B
+       B B B
 
-W W W    O O O     G G G     Y Y Y 
-W W W    O O O     G G G     Y Y Y 
-W W W    O O O     G G G     Y Y Y 
+W W W  O O O  G G G  Y Y Y 
+W W W  O O O  G G G  Y Y Y 
+W W W  O O O  G G G  Y Y Y 
  
-         R R R 
-         R R R 
-         R R R 
+       R R R 
+       R R R 
+       R R R 
   
       * 게임 설명 *
 
@@ -141,6 +73,7 @@ W W W    O O O     G G G     Y Y Y
       > R  Right side을 시계방향으로 90도 회전
       > B  Back side을 시계방향으로 90도 회전
       > D  Down side을 시계방향으로 90도 회전
+      > M  다시 섞기
       > Q  프로그램을 종료한다.
       
       문자에 ' 를 붙이면 반시계으로 90도 회전, 숫자 2 를 붙이면 2번 회전(180도) 합니다! 
@@ -328,4 +261,5 @@ const showMiddle = (cube) => {
     );
   }
 };
-startGame();
+
+startGame(init());
