@@ -74,8 +74,11 @@ const startGame = async () => {
 
   explainRule();
   // rotate 기능이 구현될때까지 잠시 가림
-  //   const inGameCube = shuffleCube(Object.assign({}, DEFAULT_CUBE));
-  const inGameCube = JSON.parse(JSON.stringify(DEFAULT_CUBE));
+  const inGameCube = shuffleCube(
+    JSON.parse(JSON.stringify(DEFAULT_CUBE)),
+    COMMANDS
+  );
+  //   const inGameCube = JSON.parse(JSON.stringify(DEFAULT_CUBE));
   showCube(inGameCube);
   let inGame = true;
   const start = new Date();
@@ -95,10 +98,11 @@ const startGame = async () => {
         return;
       }
       if (str === "M") {
-        shuffleCube(inGameCube);
+        shuffleCube(inGameCube, COMMANDS);
+      } else {
+        const command = getCommand(str, COMMANDS);
+        rotateByCommand(inGameCube, command);
       }
-      const command = getCommand(str, COMMANDS);
-      rotateByCommand(inGameCube, command);
       showCube(inGameCube);
       if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
         inforEndGame(start, count);
@@ -194,7 +198,7 @@ const checkIsCorrectInput = (array) => {
     "D",
     "D'",
     "Q",
-    "M'",
+    "M",
   ];
   let result = true;
   array.forEach((str) => {
@@ -215,8 +219,17 @@ const getCommand = (str, COMMANDS) => {
   }
   return command;
 };
-const shuffleCube = (cube) => {
-  return shuffledCube;
+const shuffleCube = (copyCube, COMMANDS) => {
+  const randomNum = Math.ceil(Math.random() * 40);
+  //섞을때는 굳이 반시계방향으로 할 필요 없다고 판단.
+  for (let i = 0; i < randomNum; i++) {
+    const randomStr = ["U", "L", "F", "R", "B", "D"][
+      Math.floor(Math.random() * 6)
+    ];
+    const command = COMMANDS[randomStr];
+    rotateByCommand(copyCube, command);
+  }
+  return copyCube;
 };
 const checkIsAnswer = (answer, ingame) => {
   if (JSON.stringify(answer) === JSON.stringify(ingame)) {
@@ -241,7 +254,6 @@ const measureRunTime = (start) => {
 };
 const rotateByCommand = (inGameCube, command) => {
   const { side, edges, edgeTurn, direction } = command;
-  //   console.log(side, edges, edgeTurn, direction);
   const angle = direction === "cw" ? 1 : 3;
   for (let i = 0; i < angle; i++) {
     rotate90_CW(inGameCube, side);
@@ -274,7 +286,6 @@ const turnEdgeSide = (inGameCube, edges, edgeTurn, ccw = true) => {
 };
 
 const moveEdge = (inGameCube, edges) => {
-  console.log(edges);
   const [up, right, down, left] = edges;
   const [temp1, temp2, temp3] = [
     inGameCube[up][2][0],
