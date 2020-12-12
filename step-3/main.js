@@ -7,43 +7,44 @@ const init = () => {
 
 const startGame = async (init) => {
   const { inGameCube, COMMANDS, DEFAULT_CUBE } = init;
-  const start = new Date();
-  let inGame = true;
-  let count = 0;
+  const inGameState = {
+    count: 0,
+    inGame: true,
+    start: new Date(),
+  };
   explainRule();
   showCube(inGameCube);
-  while (inGame) {
-    const input = await inputText();
-    const array = converInputToArray(input);
-    const isWrongInput = checkIsWrongInput(array);
-    if (isWrongInput) {
+
+  while (inGameState.inGame) {
+    const array = converInputToArray(await inputText());
+    if (checkIsWrongInput(array)) {
       continue;
     }
-    array.forEach((str) => {
-      count++;
-      proceedByStr(inGameCube, command, str);
-      showCube(inGameCube);
-      if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
-        inforEndGame(start, count);
-        inGame = false;
-        return;
-      }
-    });
+    proceedByStr(inGameCube, COMMANDS, array, inGameState);
+    if (checkIsAnswer(DEFAULT_CUBE, inGameCube)) {
+      informGameEnd(inGameState);
+      inGameState.inGame = false;
+      return;
+    }
   }
 };
-const proceedByStr = (inGameCube, command, str) => {
-  console.log("> ", str);
-  if (str === "Q") {
-    console.log("bye~");
-    inGame = false;
-    return;
-  }
-  if (str === "M") {
-    shuffleCube(inGameCube, COMMANDS);
-  } else {
-    const command = getCommand(str, COMMANDS);
-    rotateByCommand(inGameCube, command);
-  }
+const proceedByStr = (inGameCube, COMMANDS, array, inGameState) => {
+  array.forEach((str) => {
+    inGameState.count++;
+    console.log("> ", str);
+    if (str === "Q") {
+      console.log("bye~");
+      inGameState.inGame = false;
+      //// ingame over 어떻게 처리할것인지 고민하기
+    } else if (str === "M") {
+      shuffleCube(inGameCube, COMMANDS);
+      showCube(inGameCube);
+    } else {
+      const command = getCommand(str, COMMANDS);
+      rotateByCommand(inGameCube, command);
+      showCube(inGameCube);
+    }
+  });
 };
 const deepCopyCube = (original) => {
   return JSON.parse(JSON.stringify(original));
@@ -136,11 +137,11 @@ const checkIsWrongInput = (array) => {
     "Q",
     "M",
   ];
-  let result = true;
+  let result = false;
   array.forEach((str) => {
     if (!checker.includes(str)) {
       console.log(`${str} 은(는) 실행 할 수 없는 명령어입니다!`);
-      result = false;
+      result = true;
     }
   });
   return result;
@@ -156,7 +157,7 @@ const getCommand = (str, COMMANDS) => {
   return command;
 };
 const shuffleCube = (copyCube, COMMANDS) => {
-  const randomNum = Math.ceil(Math.random() * 40);
+  const randomNum = Math.ceil(Math.random() * 2);
   //섞을때는 굳이 반시계방향으로 할 필요 없다고 판단.
   for (let i = 0; i < randomNum; i++) {
     const randomStr = ["U", "L", "F", "R", "B", "D"][
@@ -174,9 +175,10 @@ const checkIsAnswer = (answer, ingame) => {
     return false;
   }
 };
-const inforEndGame = (start, count) => {
-  measureRunTime(start);
-  console.log(`조작갯수 : ${count}`);
+const informGameEnd = (inGameState) => {
+  console.log("축하합니다! 큐브의 모든 면을 맞추셨습니다");
+  measureRunTime(inGameState.start);
+  console.log(`조작갯수 : ${inGameState.count}`);
   console.log("이용해주셔서 감사합니다 BYE~");
 };
 const measureRunTime = (start) => {
