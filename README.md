@@ -86,6 +86,64 @@ nodejs로 cli를 써보는건 처음이라 input을 비동기로 받고, 그 값
 다만 만들다보니 입력값을 '검사'하는 것이 아닌 '수정'해주는 방향으로 되어버렸는데 편리하긴 하지만 사용자의 입력값을 멋대로 바꾸게 되어  
 혼란을 주지 않을까? 싶다.
 
+### 함수 설명
+
+#### - init()
+
+defaultData파일에서 기본 값을 가져오고, 게임에 사용될 큐브, 상태값들을 초기화해서 return한다
+
+#### - startGame(init)
+
+init함수에서 초기값들을 받아 팔요한 함수들을 호출하며 게임을 진행한다.
+
+#### - proceedByStr(inGameCube, COMMANDS, str, inGameState)
+
+검사가 완료된 입력값이 담긴 array에서 str을 하나씩 뽑아내 그에 맞게 게임을 진행한다.
+
+#### - deepCopyCube(original)
+
+default cube 객체의 값을 복사한 객체를 반환한다. (참조복사 x)
+
+#### - explainRule (RULE)
+
+게임 시작시 게임에 대한 설명을 안내한다.
+
+#### - inputText()
+
+입력값을 받아 비동기 처리를 위해 promise로 반환한다.
+
+#### - convertTextToFilterdArray(text)
+
+입력받은 text에서 필터에 맞는 텍스트만 추출해 array로 만들어 반환한다.
+
+#### - pushByCommand(cube, command)
+
+command에 따라 큐브 회전에 필요한 함수를 호출한다
+
+#### - pushHorizontally(cube, index, direction)
+
+큐브의 해당 index 요소들을 방향에 맞게 수평으로 밀어낸다
+
+#### - pushVertically(cube, index, direction)
+
+큐브의 수직이동을 위한 함수를 호출한다
+
+#### - makeArrayByTakeoutOfCube(cube, index)
+
+큐브에서 해당 인덱스에 맞게 요소를 추출해 임시 array에 넣고 반환한다
+
+#### - pushArrayByDirection(array, direction)
+
+임시 array에 들어있는 요소를 방향에 맞게 수직으로 밀어낸다
+
+#### - insertArrayToCube(cube, index, array)
+
+푸시가 완료된 임시 array를 큐브에 삽입한다
+
+#### = showCube(cube)
+
+현재 큐브 상태를 보여준다
+
 ### 요구사항 자체점검
 
 - 너무 크지 않은 함수 단위로 구현하려고 노력할 것 :star::star::star::star:  
