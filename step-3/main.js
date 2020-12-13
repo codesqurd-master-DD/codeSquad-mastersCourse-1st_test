@@ -1,3 +1,5 @@
+"use strict";
+
 const init = () => {
   const { DEFAULT_CUBE, COMMANDS, RULE } = require("./defaultData");
   const inGameCube = deepCopyCube(DEFAULT_CUBE);
