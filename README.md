@@ -85,6 +85,28 @@ pushString()의 경우 처음엔 한칸씩 이동시키는 함수를 num만큼 �
 
 몇 가지 디버깅도 끝냈고 일단 여기까지 하고 step-2로 넘어간다
 
+### 함수 설명
+
+#### - startGame()
+게임을 시작하기 위해 필요한 함수들을 호출한다.
+#### - getText()
+확인 버튼이 눌리면 해당 input 태그의 내용을 가져온다
+#### - removeInputValue()
+input 태그의 내용을 지운다.
+#### - converTextToArray(text)
+가져온 input 내용을 배열화해서 반환
+#### - checkIsCorrectInput(array)
+단어, 숫자, 방향이 올바르게 입력됐는지 확인해서 boolean값 반환
+#### - isString(string)
+숫자, 특수문자가 포함되지 않은 알파벳으로 구성된 단어인지 확인 후 boolean값 반환
+#### - isDirection(derection)
+방향을 지시하는 문자가 맞는지 확인 후 boolean값 반환
+#### - showResult(result)
+결과값을 resultSapn에 넣어 보여주는 함수
+#### - pushString(array)
+입력된 문자열을 숫자, 방향에 맞춰 밀어내고 반환
+#### - setValueOfDirection(derection)
+방향을 나타내는 문자를 수치화해서 반환 
 ### 요구사항 자체점검
 
 - 컴파일 및 실행되지 않을 경우 불합격 :star::star::star::star::star:  
