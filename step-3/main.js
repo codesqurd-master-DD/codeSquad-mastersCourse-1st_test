@@ -120,7 +120,7 @@ const getCommand = (str, COMMANDS) => {
   }
   return command;
 };
-const shuffleCube = (copyCube, COMMANDS) => {
+const shuffleCube = (inGameCube, COMMANDS) => {
   const randomNum = Math.ceil(Math.random() * 30);
   //섞을때는 굳이 반시계방향으로 할 필요 없다고 판단.
   for (let i = 0; i < randomNum; i++) {
@@ -128,9 +128,9 @@ const shuffleCube = (copyCube, COMMANDS) => {
       Math.floor(Math.random() * 6)
     ];
     const command = COMMANDS[randomStr];
-    rotateByCommand(copyCube, command);
+    rotateByCommand(inGameCube, command);
   }
-  return copyCube;
+  return inGameCube;
 };
 const checkIsAnswer = (answer, ingame) => {
   if (JSON.stringify(answer) === JSON.stringify(ingame)) {
@@ -228,3 +228,20 @@ const showMiddle = (cube) => {
 };
 
 startGame(init());
+function all(){
+  console.log('')
+
+}
+function first() {
+  console.log("first");
+  second();
+}
+
+function second() {
+  console.log("second");
+  third();
+}
+
+function third() {
+  console.log("third");
+}
