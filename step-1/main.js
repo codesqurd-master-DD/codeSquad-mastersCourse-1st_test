@@ -48,7 +48,7 @@ const isString = (string) => {
   // '123+ABC'와 같은 문자 외에 숫자, 특수문자가 혼합된 문자열인지
   const temp_arr = string.split("");
   for (let i = 0; i < temp_arr.length; i++) {
-    const char = temp_arr[0].charCodeAt(0);
+    const char = temp_arr[i].charCodeAt(0);
     if (!((char >= 65 && char < 91) || (char >= 97 && char < 123))) {
       return false;
     }
