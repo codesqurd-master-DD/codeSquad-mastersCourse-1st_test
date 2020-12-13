@@ -1,3 +1,13 @@
+# codeSquad-mastersCourse-test step-1
+
+## [Demo page](https://jjunyjjuny.github.io/codeSquad-mastersCourse-1st_test/step-1/index.html)
+
+## 단어 밀어내기 구현하기
+
+1. 사용자로부터 단어 하나, 정수 숫자 하나 (-100 &lt; N &lt; 100), L 또는 R을 입력 받는다 (대소문자 둘 다 가능)
+2. 주어진 단어를 정수 숫자만큼, L 또는 R 방향으로 밀어낸다
+3. 밀려난 단어는 사라지지 않고 반대쪽으로 채워진다.
+
 ### 예시
 
 홀수 줄은 입력, 짝수 줄은 출력이다.
