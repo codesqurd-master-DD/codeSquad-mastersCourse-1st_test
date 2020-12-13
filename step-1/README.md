@@ -21,7 +21,7 @@
 
 ### 예상 순서도
 
-![flowChartBefore](./step-1/img/flowChart_step1_before.png)
+![flowChartBefore](./img/flowChart_step1_before.png)
 
 ### 예상하기
 
@@ -51,7 +51,7 @@ string을 direction 방향으로 한 칸씩 민다.
 
 ### 결과 순서도
 
-![flowChartAfter](./step-1/img/flowChart_step1_after.png)
+![flowChartAfter](./img/flowChart_step1_after.png)
 
 ### 결과
 
