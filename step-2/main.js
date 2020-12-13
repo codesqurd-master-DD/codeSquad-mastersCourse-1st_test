@@ -1,65 +1,41 @@
-const startGame = async () => {
-  const DEFAULT_CUBE = [
-    ["R", "R", "W"],
-    ["G", "C", "W"],
-    ["G", "B", "B"],
-  ];
-  const COMMANDS = {
-    //[행or열, index, 방향]
-    U: ["horizen", 0, "left"],
-    "U'": ["horizen", 0, "right"],
-    R: ["vertical", "last", "up"],
-    "R'": ["vertical", "last", "down"],
-    L: ["vertical", "first", "down"],
-    "L'": ["vertical", "first", "up"],
-    B: ["horizen", 2, "right"],
-    "B'": ["horizen", 2, "left"],
+const init = () => {
+  const { DEFAULT_CUBE, COMMANDS, RULE } = require("./defualtData");
+  const inGameState = {
+    count: 0,
+    inGame: true,
+    start: new Date(),
   };
-  explainRule();
+  return { DEFAULT_CUBE, COMMANDS, RULE, inGameState };
+};
+const startGame = async (init) => {
+  const { DEFAULT_CUBE, COMMANDS, RULE, inGameState } = init;
+  explainRule(RULE);
   showCube(DEFAULT_CUBE);
+  const inGameCube = deepCopyCube(DEFAULT_CUBE);
 
-  let inGame = true;
-  while (inGame) {
-    const text = await inputText();
-    const array = convertTextToFilterdArray(text);
+  while (inGameState.inGame) {
+    const array = convertTextToFilterdArray(await inputText());
     array.forEach((str) => {
-      console.log("> ", str);
-      if (str === "Q") {
-        console.log("bye~");
-        inGame = false;
-        return;
-      }
-      const command = COMMANDS[str];
-      const cube = DEFAULT_CUBE.slice();
-      pushByCommand(cube, command);
-      showCube(cube);
+      proceedByStr(inGameCube, COMMANDS, str, inGameState);
+      showCube(inGameCube);
     });
   }
 };
-
-const explainRule = () => {
-  console.log(`
-    평면 큐브 게임에 오신걸 환영합니다!
-        
-    R R W
-    G C W
-    G B B
-
-    * 게임 설명 *
-
-    > U  가장 윗줄을 왼쪽으로 한 칸 밀기 RRW -> RWR
-    > U' 가장 윗줄을 오른쪽으로 한 칸 밀기 RRW -> WRR
-    > R  가장 오른쪽 줄을 위로 한 칸 밀기 WWB -> WBW
-    > R' 가장 오른쪽 줄을 아래로 한 칸 밀기 WWB -> BWW
-    > L  가장 왼쪽 줄을 아래로 한 칸 밀기 RGG -> GRG 
-    > L' 가장 왼쪽 줄을 위로 한 칸 밀기 RGG -> GGR
-    > B  가장 아랫줄을 오른쪽으로 한 칸 밀기 GBB -> BGB
-    > B' 가장 아랫줄을 왼쪽으로 한 칸 밀기 GBB -> BBG
-    > Q  프로그램을 종료한다.
-
-    한 번에 여러 명령을 입력할 수 있어요!
-    EX) UU'RLLB'Q
-    `);
+const proceedByStr = (inGameCube, COMMANDS, str, inGameState) => {
+  console.log("> ", str);
+  if (str === "Q") {
+    console.log("bye~");
+    inGameState.inGame = false;
+  } else {
+    const command = COMMANDS[str];
+    pushByCommand(inGameCube, command);
+  }
+};
+const deepCopyCube = (original) => {
+  return JSON.parse(JSON.stringify(original));
+};
+const explainRule = (RULE) => {
+  console.log(RULE);
 };
 
 const inputText = () => {
@@ -162,4 +138,4 @@ const showCube = (cube) => {
     console.log(row.join(" "));
   });
 };
-startGame();
+startGame(init());
