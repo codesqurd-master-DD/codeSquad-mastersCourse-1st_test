@@ -34,7 +34,6 @@ const proceedByStr = (inGameCube, COMMANDS, array, inGameState) => {
     if (str === "Q") {
       console.log("bye~");
       inGameState.inGame = false;
-      //// ingame over 어떻게 처리할것인지 고민하기
     } else if (str === "M") {
       shuffleCube(inGameCube, COMMANDS);
       showCube(inGameCube);
@@ -107,7 +106,6 @@ const getCommand = (str, COMMANDS) => {
 };
 const shuffleCube = (inGameCube, COMMANDS) => {
   const randomNum = Math.ceil(Math.random() * 30);
-  //섞을때는 굳이 반시계방향으로 할 필요 없다고 판단.
   for (let i = 0; i < randomNum; i++) {
     const randomStr = ["U", "L", "F", "R", "B", "D"][
       Math.floor(Math.random() * 6)
@@ -148,7 +146,6 @@ const rotateByCommand = (inGameCube, command) => {
   }
 };
 const rotate90_CW = (inGameCube, side) => {
-  //deep clone
   const temp_side = JSON.parse(JSON.stringify(inGameCube[side]));
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
@@ -159,7 +156,7 @@ const rotate90_CW = (inGameCube, side) => {
 const rotateEdge = (inGameCube, edges, edgeTurn) => {
   turnEdgeSide(inGameCube, edges, edgeTurn);
   moveEdge(inGameCube, edges);
-  //reset
+  //임시로 돌려놓은 edge들 reset
   turnEdgeSide(inGameCube, edges, edgeTurn, false);
 };
 const turnEdgeSide = (inGameCube, edges, edgeTurn, ccw = true) => {
@@ -213,20 +210,3 @@ const showMiddle = (cube) => {
 };
 
 startGame(init());
-function all(){
-  console.log('')
-
-}
-function first() {
-  console.log("first");
-  second();
-}
-
-function second() {
-  console.log("second");
-  third();
-}
-
-function third() {
-  console.log("third");
-}
