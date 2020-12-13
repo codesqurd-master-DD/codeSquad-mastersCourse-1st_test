@@ -58,7 +58,7 @@
 
 ### 예상 순서도
 
-![flowChart](./img/before_step-2.png)
+![flowChart](./step-2/img/before_step-2.png)
 
 ### 예상하기
 
@@ -74,7 +74,7 @@ if문을 남발하기보다 입력값을 키로 써서 나오는 값으로 구�
 
 ### 결과 순서도
 
-![flowChart](./img/after_step-2.png)
+![flowChart](./step-2/img/after_step-2.png)
 
 ### 결과
 
