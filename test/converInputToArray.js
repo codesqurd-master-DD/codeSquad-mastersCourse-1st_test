@@ -15,3 +15,4 @@ const converInputToArray = (text) => {
   }
   return result;
 };
+module.exports = { converInputToArray };
